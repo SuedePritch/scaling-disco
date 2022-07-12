@@ -141,6 +141,35 @@ router.post('/thought', (req, res) => {
 }),
 
 
+//UPDATE THOUGHT
+router.put('/thought/:id', (req, res) => {
+    Thought.findOneAndUpdate(
+    { _id: req.params.id },
+    { 
+        thoughtText: req.body.thoughtText,
+            username: req.body.username,
+            reaction:[{
+                reactionBody: req.body.reaction.reactionBody,
+                username:req.body.reaction.username
+            }]
+    },
+    // Sets to true so updated document is returned; Otherwise original document will be returned
+    { new: true },)
+    .then(function(user){
+        res.status(200).json(user)
+    })});
+
+//DELETE THOUGHT
+router.delete('/thought/:id', (req, res) => {
+    Thought.findOneAndDelete({ _id: req.params.id }, (err, result) => {
+        if (result) {
+            res.status(200).json(result);
+        } else {
+            res.status(500).json({ message: 'something went wrong' });
+        }
+        });
+    });
+
 
 
 
