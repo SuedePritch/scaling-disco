@@ -49,6 +49,34 @@ router.put('/user/:id', (req, res) => {
     })});
 
 
+//DELETE USER
+router.delete('/user/:id', (req, res) => {
+    User.findOneAndDelete({ _id: req.params.id }, (err, result) => {
+        if (result) {
+            res.status(200).json(result);
+            console.log(`Deleted: ${result}`);
+        } else {
+            console.log('Uh Oh, something went wrong');
+            res.status(500).json({ message: 'something went wrong' });
+        }
+        });
+    });
+
+
+//Add Friend
+router.put('/user/:id/friends/:friendsid', (req, res) => {
+    User.findOneAndUpdate(
+    { _id: req.params.id },
+    { 
+        $set: {friends: req.params.friendsid}
+    },
+    // Sets to true so updated document is returned; Otherwise original document will be returned
+    { new: true },)
+    .then(function(user){
+        res.status(200).json(user)
+    })});
+
+
 
 //GET ALL THOUGHTS
 // Using model in route to find all documents that are instances of that model
