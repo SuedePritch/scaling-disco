@@ -114,11 +114,7 @@ router.get('/thought/:id', (req, res) => {
 router.post('/thought', (req, res) => {
     Thought.create({
         thoughtText: req.body.thoughtText,
-            username: req.body.username,
-            reaction:[{
-                reactionBody: req.body.reaction.reactionBody,
-                username:req.body.reaction.username
-            }]
+        username: req.body.username,
     })
     .then((thought) => {
         return User.findOneAndUpdate(
@@ -132,7 +128,7 @@ router.post('/thought', (req, res) => {
             ? res.status(404).json({
             message: 'Thought created, but found no user with that ID',
             })
-        : res.json('Created the thought 🎉')
+        : res.json(user)
     )
     .catch((err) => {
         console.log(err);
@@ -147,11 +143,7 @@ router.put('/thought/:id', (req, res) => {
     { _id: req.params.id },
     { 
         thoughtText: req.body.thoughtText,
-            username: req.body.username,
-            reaction:[{
-                reactionBody: req.body.reaction.reactionBody,
-                username:req.body.reaction.username
-            }]
+        username: req.body.username
     },
     // Sets to true so updated document is returned; Otherwise original document will be returned
     { new: true },)
@@ -171,9 +163,37 @@ router.delete('/thought/:id', (req, res) => {
     });
 
 
+//NEW REACTION
+router.post('/thought/:thoughtId/reaction', (req, res) => {
+    Thought.findOneAndUpdate({_id: req.params.thoughtId},
+        { 
+            $addToSet:{reaction:[{
+                reactionBody: req.body.reactionBody,
+                username:req.body.username
+            }]}
+        },
+        // Sets to true so updated document is returned; Otherwise original document will be returned
+        { new: true },)
+        .then(function(user){
+            res.status(200).json(user)
+})});
 
 
-
+router.delete('/thought/:thoughtId/reaction/:reactionId', (req, res) => {
+    Thought.findOneAndUpdate(
+    { _id: req.params.thoughtId },
+    {  
+        $pull: {reaction: 
+            {
+                reactionId: req.params.reactionId
+            }
+        }
+    },
+    // Sets to true so updated document is returned; Otherwise original document will be returned
+    { new: true },)
+    .then(function(user){
+        res.status(200).json(user)
+    })});
 
 
 
