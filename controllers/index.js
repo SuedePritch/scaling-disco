@@ -68,7 +68,20 @@ router.put('/user/:id/friends/:friendsid', (req, res) => {
     User.findOneAndUpdate(
     { _id: req.params.id },
     { 
-        $set: {friends: req.params.friendsid}
+        $addToSet: {friends: req.params.friendsid}
+    },
+    // Sets to true so updated document is returned; Otherwise original document will be returned
+    { new: true },)
+    .then(function(user){
+        res.status(200).json(user)
+    })});
+
+
+router.delete('/user/:id/friends/:friendsid', (req, res) => {
+    User.findOneAndUpdate(
+    { _id: req.params.id },
+    { 
+        $pull: {friends: req.params.friendsid}
     },
     // Sets to true so updated document is returned; Otherwise original document will be returned
     { new: true },)
