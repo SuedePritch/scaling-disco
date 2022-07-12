@@ -5,6 +5,8 @@ require('dotenv').config();
 mongoose.connect(process.env.MONGO_CREDENTIALS, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+}, () =>{
+    console.log('Connected to MongoDB')
 })
 
 // Export connection 
