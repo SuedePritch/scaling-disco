@@ -14,8 +14,8 @@ router.get('/users', (req, res) => {
 //GET SINGLE USER
 router.get('/user/:id', (req, res) => {
     User.findOne({_id: req.params.id})
-    // .populate('friends')
-    // .populate('thoughts')
+    .populate('friends')
+    .populate('thoughts')
     .then(function(user){
         res.status(200).json(user)
     })});
@@ -93,7 +93,7 @@ router.delete('/user/:id/friends/:friendsid', (req, res) => {
 
 //GET ALL THOUGHTS
 // Using model in route to find all documents that are instances of that model
-router.get('/all-thoughts', (req, res) => {
+router.get('/thoughts', (req, res) => {
     Thought.find({}, (err, result) => {
     if (err) {
         res.status(500).send({ message: 'Internal Server Error' });
@@ -103,9 +103,42 @@ router.get('/all-thoughts', (req, res) => {
     });
 });
 
+//SINGLE THOUGHT
+router.get('/thought/:id', (req, res) => {
+    Thought.findOne({_id: req.params.id})
+    .then(function(user){
+        res.status(200).json(user)
+})});
 
-
-
+//New Thought
+router.post('/thought', (req, res) => {
+    Thought.create({
+        thoughtText: req.body.thoughtText,
+            username: req.body.username,
+            reaction:[{
+                reactionBody: req.body.reaction.reactionBody,
+                username:req.body.reaction.username
+            }]
+    })
+    .then((thought) => {
+        return User.findOneAndUpdate(
+        { _id: req.body.userId },
+        { $addToSet: { thoughts: thought._id } },
+        { new: true }
+        );
+    })
+    .then((user) =>
+        !user
+            ? res.status(404).json({
+            message: 'Thought created, but found no user with that ID',
+            })
+        : res.json('Created the thought 🎉')
+    )
+    .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+    });
+}),
 
 
 
