@@ -48,7 +48,10 @@ Thought.find({}).exec((err, collection) => {
         Thought.create({
             thoughtText: 'James Pritchard',
             username: 'Joey',
-            reaction:[]
+            reaction:[{
+                reactionBody: 'this is a reaction',
+                username:'mikey'
+            }]
         },
         (err) => (err ? handleError(err) : console.log('Created new document'))
 )}})

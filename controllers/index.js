@@ -6,6 +6,7 @@ const { User, Thought} = require('../models')
 router.get('/all-users', (req, res) => {
     User.find({})
     .populate('friends')
+    .populate('thoughts')
     .then(function(user){
         res.status(200).json(user)
     })});

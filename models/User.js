@@ -1,4 +1,5 @@
 const {Schema,model} = require('mongoose');
+const {Thought} = require('./Thought')
 
 const UserSchema = new Schema({
     username: { 
@@ -38,10 +39,10 @@ const handleError = (err) => console.error(err);
 User.find({}).exec((err, collection) => {
     if (collection.length < 8) {
         User.create({
-            username: 'mikey',
-            email: "mikey@gmail.com",
-            friends:["62ccde53a3ccc8e6b0fd62ae"],
-            thoughts:["62cccac5f4b00b9fa93eb955", "62cccad4760933c99550be33"],
+            username: 'james',
+            email: "james@gmail.com",
+            friends:["62cd79b4207ef1843c16d87d"],
+            thoughts:["62cd79c74f15113f61fe2afc"],
         },
         (err) => (err ? handleError(err) : console.log('Created new document'))
 )}})
