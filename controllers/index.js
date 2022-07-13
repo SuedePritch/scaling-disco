@@ -52,18 +52,29 @@ router.put('/user/:id', (req, res) => {
 //DELETE USER
 router.delete('/user/:id', (req, res) => {
     User.findOneAndDelete({ _id: req.params.id }, (err, result) => {
-        if (result) {
+        const thoughtIdArr = result.thoughts;
+        Thought.find({_id: thoughtIdArr}, (err, result) => {
+            for (let i = 0; i < result.length; i++) {
+                const thoughtId = result[i]._id;
+                Thought.findOneAndDelete({ _id: thoughtId }, (err, result) => {
+                    if (err) {
+                        res.status(500).json({ message: 'something went wrong' });
+                    } 
+                    });
+            }        
+            
             res.status(200).json(result);
-            console.log(`Deleted: ${result}`);
-        } else {
-            console.log('Uh Oh, something went wrong');
-            res.status(500).json({ message: 'something went wrong' });
-        }
+            
+            
         });
-    });
+    })
+});
 
 
-//Add Friend
+
+    
+
+//ADD FRIEND
 router.put('/user/:id/friends/:friendsid', (req, res) => {
     User.findOneAndUpdate(
     { _id: req.params.id },
@@ -76,7 +87,7 @@ router.put('/user/:id/friends/:friendsid', (req, res) => {
         res.status(200).json(user)
     })});
 
-
+//DELETE FRIEND
 router.delete('/user/:id/friends/:friendsid', (req, res) => {
     User.findOneAndUpdate(
     { _id: req.params.id },
@@ -109,6 +120,8 @@ router.get('/thought/:id', (req, res) => {
     .then(function(user){
         res.status(200).json(user)
 })});
+
+
 
 //New Thought
 router.post('/thought', (req, res) => {
@@ -163,6 +176,8 @@ router.delete('/thought/:id', (req, res) => {
     });
 
 
+
+
 //NEW REACTION
 router.post('/thought/:thoughtId/reaction', (req, res) => {
     Thought.findOneAndUpdate({_id: req.params.thoughtId},
@@ -178,7 +193,7 @@ router.post('/thought/:thoughtId/reaction', (req, res) => {
             res.status(200).json(user)
 })});
 
-
+//DELETE REACTION
 router.delete('/thought/:thoughtId/reaction/:reactionId', (req, res) => {
     Thought.findOneAndUpdate(
     { _id: req.params.thoughtId },
