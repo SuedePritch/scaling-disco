@@ -4,6 +4,7 @@ const { User, Thought} = require('../../models')
 // Using model in route to find all documents that are instances of that model
 router.get('/', (req, res) => {
     User.find({})
+    .select('-__v')
     .populate('friends')
     .populate('thoughts')
     .then(function(user){
@@ -13,6 +14,7 @@ router.get('/', (req, res) => {
 //GET SINGLE USER
 router.get('/:id', (req, res) => {
     User.findOne({_id: req.params.id})
+    .select('-__v')
     .populate('friends')
     .populate('thoughts')
     .then(function(user){

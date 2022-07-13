@@ -3,18 +3,17 @@ const { User, Thought} = require('../../models')
 //GET ALL THOUGHTS
 // Using model in route to find all documents that are instances of that model
 router.get('/', (req, res) => {
-    Thought.find({}, (err, result) => {
-    if (err) {
-        res.status(500).send({ message: 'Internal Server Error' });
-    } else {
-        res.status(200).json(result);
-    }
-    });
+    Thought.find({})
+    .select('-__v')
+    .then(function(user){
+        res.status(200).json(user)
+    })
 });
 
 //SINGLE THOUGHT
 router.get('/:id', (req, res) => {
     Thought.findOne({_id: req.params.id})
+    .select('-__v')
     .then(function(user){
         res.status(200).json(user)
 })});
