@@ -1,5 +1,9 @@
 const router = require('express').Router();
-const { User, Thought} = require('../../models')
+const { Thought} = require('../../models')
+
+//This constains all the thought routes as well as the add/delete reactions
+
+
 //GET ALL THOUGHTS
 // Using model in route to find all documents that are instances of that model
 router.get('/', (req, res) => {

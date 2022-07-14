@@ -1,7 +1,11 @@
 const router = require('express').Router();
 const { User, Thought} = require('../../models')
+
+
+//This constains all the user routes as well as the add/delete friends
+//Delete user will remove all thoughts made by that user
+
 //GET ALL USERS
-// Using model in route to find all documents that are instances of that model
 router.get('/', (req, res) => {
     User.find({})
     .select('-__v')
@@ -70,6 +74,13 @@ router.delete('/:id', (req, res) => {
         });
     })
 });
+
+
+
+
+
+
+
 
 //ADD FRIEND
 router.put('/:id/friends/:friendsid', (req, res) => {

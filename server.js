@@ -14,9 +14,9 @@ app.use(require('./controllers'));
 
 db.once('open', () => {
     app.listen(PORT, () => {
-    console.log("-----------------------".bgBlue)
-    console.log("--API Running on PORT--".bgBlue, PORT)
-    console.log("-----------------------".bgBlue)
+    console.log("--------------------------------".bgBlue)
+    console.log("--API Running on PORT--".bgBlue, PORT , "---".bgBlue)
+    console.log("--------------------------------".bgBlue)
     
     });
 });

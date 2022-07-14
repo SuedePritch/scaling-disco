@@ -1,16 +1,22 @@
 const {Schema,model} = require('mongoose');
 
+//User schema
+//username of the user needs to be unique
+//email needs to be unique and valid email structure(should send confirmation email to confirm)
+//friends is a array of users that this user is friends with
+//thoughts is an array that this user has created
+
 const UserSchema = new Schema({
     username: { 
         type: String, 
         required: true, 
-        // unique: true, 
-        // trimmed:true 
+        unique: true, 
+        trimmed:true 
     },
     email: { 
         type: String, 
         required: true, 
-        // unique: true,
+        unique: true,
         lowercase: true,
         validate: {
             validator: function(v) {
@@ -35,7 +41,7 @@ const UserSchema = new Schema({
     id: false,
 });
 
-
+//virutal to get the number of friends
 UserSchema.virtual('friendCount').get(function () { return this.friends.length; })
 
 const User = model('User', UserSchema);
@@ -43,7 +49,7 @@ const User = model('User', UserSchema);
 
 const handleError = (err) => console.error(err);
 
-
+//Seed a single user
 User.find({}).exec((err, collection) => {
     if (collection.length === 0) {
         User.create({

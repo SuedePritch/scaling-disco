@@ -3,7 +3,9 @@
 ### Description
 This app is a Social Network API utilizing mongoose/mongoDB for CRUD operations 
 
-<!-- [Video Walkthrough](https://drive.google.com/file/d/1BO4hN95Cw1rs-JjRngfBfrIABs3h0EQ-/view) -->
+[Video Walkthrough Part 1](https://drive.google.com/file/d/1qWJHFSy88hzglU6_bs_kLbvkDLZOy0Tp/view)
+
+[Video Walkthrough Part 2](https://drive.google.com/file/d/11toEo5iwK2hLPNI9QoIFZz7YjO9GmZ7d/view)
 ### Installation
 install dependancies
 

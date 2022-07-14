@@ -1,4 +1,4 @@
-// const Item = require('./Item');
+//importing and exporting models
 const User = require('./User')
 const Thought = require('./Thought')
 
