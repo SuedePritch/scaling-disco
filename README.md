@@ -26,17 +26,23 @@ start server
 
 ### API routes
 
-* Get all users - GET - /api/user/
-* Get one user - GET - /api/user/:id
-* New user - POST - /api/user/
-* Update user - PUT - /api/user/:id
-* Delete user - DELETE - /api/user/:id
+* Get all users     - GET    - /api/user/
+* Get one user      - GET    - /api/user/:id
+* New user          - POST   - /api/user/
+* Update user       - PUT    - /api/user/:id
+* Delete user       - DELETE - /api/user/:id
+---    
 
-* Get all thoughts - GET - /api/thought/
-* Get one thought - GET - /api/thought/:id
-* New thought - POST - /api/thought/
-* Update thought - PUT - /api/thought/:id
-* Delete thought - DELETE - /api/thought/:id
+* Add Friend        - POST   - /api/user/:id/friends/:friendsid
+* Delete Friend     - DELETE - /api/user/:id/friends/:friendsid
 
-* Get all reactions - GET - /api/:thoughtId/reaction
-* Delete reaction - DELETE - /api/:thoughtId/reaction/:reactionId
+---
+* Get all thoughts  - GET    - /api/thought/
+* Get one thought   - GET    - /api/thought/:id
+* New thought       - POST   - /api/thought/
+* Update thought    - PUT    - /api/thought/:id
+* Delete thought    - DELETE - /api/thought/:id
+
+---
+* Get all reactions - GET    - /api/:thoughtId/reaction
+* Delete reaction   - DELETE - /api/:thoughtId/reaction/:reactionId
